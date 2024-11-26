@@ -29,9 +29,8 @@ jobs:
         key: ${{ secrets.EC2_SSH_KEY }}
         script: |
           pm2 delete my-app || echo "No existing process found"
-          cd DistribuidaN-2
+          cd AWS-Devops
           sudo git pull origin main
-          cd OneProject
           sudo npm install
           sudo npm run build
           sudo pm2 start npm --name "my-app" -- run dev
