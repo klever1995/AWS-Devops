@@ -1,0 +1,11 @@
+{
+  "name": "asetest",
+  "version": "1.0.0",
+  "description": "This project demonstrates a **CI/CD pipeline** for automatic deployment to an **AWS EC2 instance** using **GitHub Actions**.",
+  "main": "vite.config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
