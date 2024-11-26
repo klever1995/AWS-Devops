@@ -1,36 +1,28 @@
-name: Deploy to AWS EC2
-
-on:
-  push:
-    branches:
-      - main  # Se activa cuando hay un push a la rama main
-
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-
-    - name: Set up SSH
-      uses: webfactory/ssh-agent@v0.5.3
-      with:
-        ssh-private-key: ${{ secrets.EC2_SSH_KEY }}  # Debes agregar tu clave SSH en GitHub Secrets
-
-    - name: Deploy to EC2 instance
-      run: |
-        ssh -o StrictHostKeyChecking=no ec2-user@${{ secrets.EC2_HOST }} << 'EOF'
-          cd /var/www/html
-          git pull origin main  # Obtiene los cambios más recientes de GitHub
-          sudo systemctl restart apache2  # O el servicio de nginx si lo usas
-        EOF
-
-    - name: Rollback if needed
-      if: failure()  # Si el paso anterior falla, se ejecuta este rollback
-      run: |
-        ssh -o StrictHostKeyChecking=no ec2-user@${{ secrets.EC2_HOST }} << 'EOF'
-          cd /var/www/html
-          git reset --hard HEAD~1  # Vuelve al commit anterior (rollback)
-          sudo systemctl restart apache2  # O el servicio de nginx si lo usas
-        EOF
+{
+  "name": "oneproject",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0",
+    "build": "vite build",
+    "lint": "eslint .",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.13.0",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^4.3.3",
+    "eslint": "^9.13.0",
+    "eslint-plugin-react": "^7.37.2",
+    "eslint-plugin-react-hooks": "^5.0.0",
+    "eslint-plugin-react-refresh": "^0.4.14",
+    "globals": "^15.11.0",
+    "vite": "^5.4.10"
+  }
+}
